@@ -52,4 +52,14 @@ describe Eventstore::Http do
       Eventstore::Http::Event.new({key1: "value1",}, "my-event-type", event_id = SecureRandom.uuid)
     )
   end
+
+  specify "can get stored event" do
+    client = Eventstore::Http::Client.new
+    stream = client.stream(stream_name = SecureRandom.hex)
+    stream.publish(
+      Eventstore::Http::Event.new({key1: "value1",}, "my-event-type", event_id = SecureRandom.uuid)
+    )
+    stream.last_event
+
+  end
 end
